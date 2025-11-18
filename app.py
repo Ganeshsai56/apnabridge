@@ -101,7 +101,7 @@ verified_emails = set()
 # ---------------- ROUTES ----------------
 @app.route("/")
 def home():
-    return jsonify({"message": "ApnaBridge Backend Connected ✅"})
+     return render_template("index.html")
 
 # ---- LOGIN ----
 @app.route("/login", methods=["POST"])
@@ -629,3 +629,4 @@ def resend_otp():
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5000)
+
