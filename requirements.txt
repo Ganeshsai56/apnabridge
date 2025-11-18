@@ -23,6 +23,8 @@ mysql-connector-python==8.4.0
 google-auth
 google-auth-oauthlib
 authlib
+psycopg2-binary==2.9.9
+
 
 
 
