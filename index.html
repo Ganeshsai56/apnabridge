@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ApnaBridge | Jobs & Rentals</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <!-- ADDED: Font Awesome for social logos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -292,6 +295,339 @@
     }
     .social-icons a:hover { transform: rotate(15deg) scale(1.1); }
 
+    /* FAQ Section */
+    .faq-section {
+      padding: 60px 10%;
+      background: linear-gradient(180deg, #e8f5ff, #ffffff);
+    }
+    .faq-section h2 {
+      text-align: center;
+      color: #0077b6;
+      margin-bottom: 30px;
+      font-size: 28px;
+    }
+    .faq-list {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .faq-item {
+      margin-bottom: 15px;
+      border-radius: 10px;
+      background: #ffffff;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+      overflow: hidden;
+    }
+    .faq-item summary {
+      padding: 14px 18px;
+      cursor: pointer;
+      list-style: none;
+      font-weight: 600;
+      color: #023e8a;
+    }
+    .faq-item summary::-webkit-details-marker {
+      display: none;
+    }
+    .faq-item summary::after {
+      content: "+";
+      float: right;
+      font-weight: bold;
+    }
+    .faq-item[open] summary::after {
+      content: "-";
+    }
+    .faq-item p {
+      padding: 0 18px 16px 18px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    /* WhatsApp Floating Button */
+    .whatsapp-float {
+      position: fixed;
+      width: 56px;
+      height: 56px;
+      bottom: 20px;
+      right: 20px;
+      background: #25D366;
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 26px;
+      text-decoration: none;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+      z-index: 3000;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .whatsapp-float:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+    }
+    .whatsapp-float span {
+      position: absolute;
+      bottom: 70px;
+      right: 0;
+      background: #ffffff;
+      color: #333;
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    }
+
+    /* =====================
+       EXTRA MOBILE LAYOUT
+       (ONLY ADDED, NOTHING ABOVE CHANGED)
+       ===================== */
+    @media (max-width: 768px) {
+
+      /* Navbar smaller & simpler */
+      .navbar {
+        padding: 0 16px;
+        height: 64px;
+      }
+
+      .logo img {
+        height: 60px;
+      }
+
+      .logo span {
+        font-size: 18px;
+      }
+
+      /* Hide big yellow buttons on mobile */
+      .nav-right .list-btn {
+        display: none;
+      }
+
+      .nav-right {
+        gap: 8px;
+      }
+
+      .profile-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+      }
+
+      /* Hero section */
+      .hero {
+        height: auto;
+        padding: 80px 16px 40px;
+      }
+
+      .hero-content h1 {
+        font-size: 28px;
+        line-height: 1.4;
+      }
+
+      .hero-content p {
+        font-size: 14px;
+        margin-bottom: 18px;
+      }
+
+      /* Search box: stack vertically */
+      .search-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        padding: 12px;
+        border-radius: 18px;
+        max-width: 100%;
+      }
+
+      .search-container input,
+      .search-container select,
+      .search-container button {
+        width: 100%;
+        border-radius: 12px;
+        font-size: 14px;
+      }
+
+      /* Services */
+      .services {
+        padding: 32px 16px;
+        gap: 18px;
+      }
+
+      .service-card {
+        padding: 20px;
+      }
+
+      /* Trending & FAQ */
+      .trending-section,
+      .faq-section {
+        padding: 32px 16px;
+      }
+
+      .trending-section h2,
+      .faq-section h2 {
+        font-size: 22px;
+      }
+
+      /* Footer */
+      footer {
+        padding: 24px 16px;
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .social-icons {
+        justify-content: center;
+      }
+    }
+
+    /* =====================
+       SOCIAL ICON LOGOS (ONLY ADDED)
+       ===================== */
+    .social-icons a {
+      position: relative;
+      overflow: hidden;
+      font-size: 0;           /* hide F/I/Y/X/L text visually */
+      text-indent: -9999px;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 60%;
+    }
+
+    .social-icons a:nth-child(1) {
+      /* Instagram */
+      background-image: linear-gradient(45deg,#f9ce34,#ee2a7b,#6228d7);
+      color: #fff;
+    }
+    .social-icons a:nth-child(2) {
+      /* Facebook */
+      background-color: #1877F2;
+      color: #fff;
+    }
+    .social-icons a:nth-child(3) {
+      /* YouTube */
+      background-color: #FF0000;
+      color: #fff;
+    }
+    .social-icons a:nth-child(4) {
+      /* X (Twitter) */
+      background-color: #000000;
+      color: #fff;
+    }
+    .social-icons a:nth-child(5) {
+      /* LinkedIn */
+      background-color: #0A66C2;
+      color: #fff;
+    }
+
+    /* =====================
+       EXTRA: Font Awesome fallback so logos always show
+       ===================== */
+    .social-icons a::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Font Awesome 6 Brands";
+      font-weight: 400;
+      font-size: 18px;
+      text-indent: 0;
+    }
+    .social-icons a:nth-child(1)::before { content: "\f16d"; } /* Instagram */
+    .social-icons a:nth-child(2)::before { content: "\f09a"; } /* Facebook */
+    .social-icons a:nth-child(3)::before { content: "\f167"; } /* YouTube  */
+    .social-icons a:nth-child(4)::before { content: "\f099"; } /* Twitter/X */
+    .social-icons a:nth-child(5)::before { content: "\f0e1"; } /* LinkedIn */
+
+    /* small gap between the two footer paragraphs */
+    footer p + p {
+      margin-top: 6px;
+    }
+
+    /* ADDED: footer logo styling */
+    .footer-logo {
+      height: 150px;
+      width: auto;
+      margin-bottom: 10px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25));
+    }
+
+    /* =====================
+       CORPORATE DETAILS SECTION (NEW)
+       ===================== */
+    .corp-details {
+      display: none;
+      background: #f4f7fb;
+      padding: 30px 60px;
+      border-top: 1px solid rgba(0,0,0,0.06);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .corp-details h2 {
+      color: #023e8a;
+      margin-bottom: 10px;
+      font-size: 22px;
+    }
+    .corp-details p {
+      font-size: 14px;
+      color: #444;
+      margin-bottom: 6px;
+    }
+    .corp-form {
+      max-width: 480px;
+      margin-top: 12px;
+    }
+    .corp-form-row {
+      margin-bottom: 10px;
+      text-align: left;
+    }
+    .corp-form-row label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #023e8a;
+    }
+    .corp-form-row input,
+    .corp-form-row textarea {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+      font-size: 14px;
+      outline: none;
+    }
+    .corp-form-row textarea {
+      resize: vertical;
+      min-height: 70px;
+    }
+    .corp-form button {
+      margin-top: 8px;
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: none;
+      background: #0077b6;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .corp-form button:hover {
+      background: #023e8a;
+    }
+    .corp-note {
+      margin-top: 10px;
+      font-size: 13px;
+    }
+    .corp-note a {
+      color: #023e8a;
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .corp-details {
+        padding: 20px 16px;
+      }
+    }
   </style>
 </head>
 
@@ -380,11 +716,39 @@
     </div>
   </section>
 
+  <!-- FAQ Section -->
+  <section class="faq-section" id="faqs">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>What is ApnaBridge?</summary>
+        <p>ApnaBridge is a platform where you can find verified job opportunities and rental properties in different cities.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How do I list my job or rental?</summary>
+        <p>You can click on the “List Your Job” or “List Your Rental” buttons in the top navigation bar and fill out the form with your details.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Is using ApnaBridge free?</summary>
+        <p>Browsing jobs and rentals is free for users. Listing policies and charges, if any, depend on future business rules of ApnaBridge.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How do I contact the owner or recruiter?</summary>
+        <p>Open any listing and you will find the contact details or application method provided by the owner or recruiter.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can I search only in my city?</summary>
+        <p>Yes, you can select your city from the location dropdown in the search bar on the home page and then search.</p>
+      </details>
+    </div>
+  </section>
+
   <!-- Footer -->
   <footer>
     <div>
       <h3>About ApnaBridge</h3>
       <p>Your trusted platform to find verified jobs and rental listings easily.</p>
+      <p>Connect with us</p>
       <div class="social-icons">
         <a href="#">F</a><a href="#">I</a><a href="#">Y</a><a href="#">X</a><a href="#">L</a>
       </div>
@@ -405,7 +769,19 @@
     </div>
   </footer>
 
+  <!-- NEW: Corporate details block that appears when clicking footer items -->
+  <section id="corporate-details" class="corp-details">
+    <h2 id="corp-details-title"></h2>
+    <div id="corp-details-body"></div>
+  </section>
+
   <p style="text-align:center; padding:10px; background:#0077b6; color:white;">© 2025 ApnaBridge | Designed by Ntqs  </p>
+
+  <!-- WhatsApp Chat Button (update the phone number as needed) -->
+  <a href="https://wa.me/918501027056?text=Hi%20ApnaBridge%2C%20I%20need%20some%20help." class="whatsapp-float" target="_blank" rel="noopener">
+    💬
+    <span>Chat on WhatsApp</span>
+  </a>
 
   <script>
     function toggleMenu(){document.getElementById("sidebar").classList.toggle("active");document.getElementById("overlay").classList.toggle("active");}
@@ -424,7 +800,7 @@
       }
       window.location.href=`${targetPage}?query=${encodeURIComponent(query)}&location=${encodeURIComponent(location)}`;
     }
-    function logout(){alert("You have been logged out!");window.location.href="index.html";}
+    function logout(){alert("You have been logged out!");localStorage.removeItem("loggedIn");window.location.href="index.html";}
     async function loadTrending(){
       const jobContainer=document.getElementById("jobContainer");
       const rentalContainer=document.getElementById("rentalContainer");
@@ -446,10 +822,195 @@
     }
     function escapeHtml(str){return str?String(str).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;"):"";}
     document.addEventListener("DOMContentLoaded", loadTrending);
+
+    /* ---------------
+       LOGIN REQUIRED LOGIC
+       (only added code, existing lines are unchanged)
+    --------------- */
+    function isLoggedIn(){
+      return localStorage.getItem("loggedIn") === "true";
+    }
+
+    function shouldProtectElement(el){
+      if(!el) return false;
+      const tag = el.tagName;
+      const href = (el.getAttribute("href") || "").toLowerCase();
+
+      // Do NOT protect login page link
+      if (href.includes("login.html")) return false;
+
+      // Protect links going to jobs/rentals/add pages/details
+      if (href && (
+        href.includes("jobs.html") ||
+        href.includes("rentals.html") ||
+        href.includes("add-job.html") ||
+        href.includes("add-rental.html") ||
+        href.includes("job_details.html") ||
+        href.includes("rental_details.html")
+      )){
+        return true;
+      }
+
+      // Protect buttons like "List Your Job", "List Your Rental", "View Jobs", "View Rentals"
+      if (tag === "BUTTON" && el.classList.contains("list-btn")) {
+        return true;
+      }
+
+      // Protect trending listing links (extra safety)
+      if (el.classList.contains("listing-link")) {
+        return true;
+      }
+
+      return false;
+    }
+
+    function getTargetUrlFromElement(el){
+      let href = el.getAttribute("href") || "";
+
+      if (!href && el.tagName === "BUTTON") {
+        const onclickAttr = el.getAttribute("onclick") || "";
+        const match = onclickAttr.match(/'([^']+\.html[^']*)'/);
+        if (match && match[1]) {
+          href = match[1];
+        }
+      }
+
+      if (!href || href === "#") {
+        href = "index.html";
+      }
+      return href;
+    }
+
+    // Intercept clicks BEFORE inline onclick handlers
+    document.addEventListener("click", function(e){
+      const target = e.target.closest("a,button");
+      if (!target) return;
+
+      if (!shouldProtectElement(target)) return;
+      if (isLoggedIn()) return;
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      const nextPage = getTargetUrlFromElement(target);
+      window.location.href = "login.html?redirect=" + encodeURIComponent(nextPage);
+    }, true);
+
+    // ---- ADDED: stronger logout – clears google_user so login.html doesn't auto-skip ----
+    function logout(){
+      alert("You have been logged out!");
+      // clear all login markers
+      localStorage.removeItem("loggedIn");
+      localStorage.removeItem("apnabridge_isLoggedIn");
+      try {
+        sessionStorage.removeItem("google_user");
+      } catch (e) {}
+      // back to home page
+      window.location.href = "index.html";
+    }
+
+    // ADDED: make social icons open real pages in new tab
+    document.addEventListener("DOMContentLoaded", function () {
+      const socials = document.querySelectorAll(".social-icons a");
+      if (!socials.length) return;
+
+      // change these URLs to your real profiles
+      const urls = [
+        "https://www.instagram.com/",   // Instagram
+        "https://www.facebook.com/",    // Facebook
+        "https://www.youtube.com/",     // YouTube
+        "https://twitter.com/",         // X / Twitter
+        "https://www.linkedin.com/"     // LinkedIn
+      ];
+
+      socials.forEach((link, idx) => {
+        if (urls[idx]) {
+          link.href = urls[idx];
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+        }
+      });
+    });
+
+    // ADDED: Corporate links show details section (About Us, Contact, etc.)
+    document.addEventListener("DOMContentLoaded", function () {
+      const corpSection = document.getElementById("corporate-details");
+      const titleEl = document.getElementById("corp-details-title");
+      const bodyEl = document.getElementById("corp-details-body");
+      if (!corpSection || !titleEl || !bodyEl) return;
+
+      // second column of footer (Corporate)
+      const corporateColumn = document.querySelector("footer > div:nth-child(2)");
+      if (!corporateColumn) return;
+
+      const links = corporateColumn.querySelectorAll("a");
+      if (!links.length) return;
+
+      const contentMap = {
+        "About Us": {
+          title: "About ApnaBridge",
+          body: `<p>ApnaBridge is a local-first platform that connects job seekers, recruiters, tenants and property owners in one simple place.</p>
+                 <p>Our goal is to make it easy for people to discover verified jobs and affordable rental options in their own city.</p>`
+        },
+        "Contact": {
+          title: "Contact ApnaBridge",
+          body: `<p>Have a question or want to work with us? Share your details below and our team will get back to you.</p>
+                 <form class="corp-form" onsubmit="event.preventDefault(); alert('Thank you! We will contact you soon.');">
+                   <div class="corp-form-row">
+                     <label for="corpName">Full Name</label>
+                     <input id="corpName" type="text" placeholder="Your name" required>
+                   </div>
+                   <div class="corp-form-row">
+                     <label for="corpEmail">Email</label>
+                     <input id="corpEmail" type="email" placeholder="you@example.com" required>
+                   </div>
+                   <div class="corp-form-row">
+                     <label for="corpPhone">Phone Number</label>
+                     <input id="corpPhone" type="tel" placeholder="+91-XXXXXXXXXX">
+                   </div>
+                   <div class="corp-form-row">
+                     <label for="corpMsg">Message</label>
+                     <textarea id="corpMsg" placeholder="Tell us how we can help"></textarea>
+                   </div>
+                   <button type="submit">Submit</button>
+                 </form>
+                 <p class="corp-note">You can also reach us at
+                   <a href="mailto:support@apnabridge.com">support@apnabridge.com</a>
+                   or call <strong>+91-85010-27056</strong>.
+                 </p>`
+        },
+        "Terms & Conditions": {
+          title: "Terms & Conditions",
+          body: `<p>ApnaBridge provides a listing platform for jobs and rentals. We do not guarantee hiring decisions, property availability or agreements between users.</p>
+                 <p>Users are responsible for verifying listings, documents and payments before entering into any agreement.</p>`
+        },
+        "Privacy Policy": {
+          title: "Privacy Policy",
+          body: `<p>We respect your privacy and only collect basic information needed to run the platform and improve your experience.</p>
+                 <p>Your data is never sold to third parties. For any privacy-related queries, write to
+                    <a href="mailto:privacy@apnabridge.com">privacy@apnabridge.com</a>.
+                 </p>`
+        }
+      };
+
+      links.forEach(link => {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          const key = this.textContent.trim();
+          const cfg = contentMap[key];
+          if (!cfg) return;
+          titleEl.textContent = cfg.title;
+          bodyEl.innerHTML = cfg.body;
+          corpSection.style.display = "block";
+          corpSection.scrollIntoView({ behavior: "smooth" });
+        });
+      });
+    });
   </script>
 
 </body>
 </html>
+
 
 
 
