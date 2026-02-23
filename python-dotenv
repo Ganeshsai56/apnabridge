@@ -1,0 +1,6 @@
+from dotenv import load_dotenv
+load_dotenv()
+import os
+
+client_id = os.getenv("183402241443-18chj32jp55paru1otion88bkau0gfgm.apps.googleusercontent.com")
+client_secret = os.getenv("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")
