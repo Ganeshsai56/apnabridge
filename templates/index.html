@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ApnaBridge | Jobs & Rentals</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <!-- ADDED: Font Awesome for social logos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #e3f2fd, #f9f9f9);
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    /* Smooth animation */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: rgba(0, 119, 182, 0.85);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 50px;
+      height: 75px;
+      color: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .nav-left { display: flex; align-items: center; gap: 15px; }
+    .menu-icon {
+      font-size: 26px; cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .menu-icon:hover { transform: rotate(90deg) scale(1.2); }
+
+    .logo {
+      display: flex; align-items: center; gap: 10px; cursor: pointer;
+    }
+    .logo img {
+      height: 125px; width: auto;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+      transition: transform 0.4s ease;
+    }
+    .logo img:hover { transform: rotateY(15deg) scale(1.05); }
+    .logo span { color: #ffdd00; font-weight: bold; font-size: 22px; }
+
+    .nav-right {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .list-btn {
+      background: linear-gradient(135deg, #ffdd00, #ffd43b);
+      color: #000; border: none;
+      padding: 8px 16px; border-radius: 50px;
+      font-weight: 600; cursor: pointer;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+    }
+    .list-btn:hover { transform: translateY(-3px) scale(1.05); }
+
+    .profile-icon {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: white; display: flex; justify-content: center; align-items: center;
+      color: #0077b6; font-weight: bold; cursor: pointer;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+    }
+    .profile-icon:hover { transform: translateY(-3px) rotate(10deg); }
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      left: -260px; top: 0; height: 100%; width: 250px;
+      background: linear-gradient(160deg, #023e8a, #0077b6);
+      color: white; padding: 20px;
+      transition: left 0.4s ease;
+      z-index: 2000;
+      box-shadow: 4px 0 20px rgba(0,0,0,0.4);
+    }
+    .sidebar.active { left: 0; }
+    .sidebar h2 { color: #ffdd00; margin-bottom: 25px; }
+    .sidebar a {
+      display: block; color: #fff; text-decoration: none;
+      padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.2);
+      transition: all 0.3s;
+    }
+    .sidebar a:hover { color: #ffdd00; padding-left: 8px; }
+    .logout-btn {
+      background: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 25px;
+      transition: all 0.3s;
+      /* OPTIONAL: start hidden, JS will show when logged in */
+      /* display: none; */
+    }
+    .logout-btn:hover { background: #e60000; transform: scale(1.05); }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      z-index: 1500;
+    }
+    .overlay.active { display: block; }
+
+    /* Hero Section */
+    .hero {
+      background: url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1500&q=80') center/cover no-repeat;
+      height: 500px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      color: white;
+      text-align: center;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(2px);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      transform: translateY(0);
+      animation: float 4s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .hero-content h1 {
+      font-size: 44px;
+      margin-bottom: 12px;
+      text-shadow: 0 3px 10px rgba(0,0,0,0.3);
+    }
+    .hero-content p {
+      font-size: 18px;
+      margin-bottom: 25px;
+    }
+
+    .search-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(12px);
+      padding: 14px 18px;
+      border-radius: 50px;
+      max-width: 680px;
+      margin: 0 auto;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+    .search-container input, .search-container select {
+      padding: 10px 15px;
+      border: none;
+      outline: none;
+      border-radius: 30px;
+      font-size: 15px;
+      width: 45%;
+      background: rgba(255,255,255,0.8);
+    }
+    .search-container button {
+      background: linear-gradient(135deg, #0077b6, #023e8a);
+      color: white; border: none;
+      padding: 10px 20px; border-radius: 30px;
+      cursor: pointer; font-weight: 600;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+      transition: all 0.3s;
+    }
+    .search-container button:hover { transform: translateY(-2px); }
+
+    /* Services */
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 25px;
+      padding: 60px 60px;
+    }
+    .service-card {
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      padding: 30px;
+      text-align: center;
+      transition: all 0.4s ease;
+      transform-style: preserve-3d;
+    }
+    .service-card:hover {
+      transform: rotateY(8deg) translateY(-8px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+    }
+    .service-card h3 { color: #0077b6; margin-bottom: 10px; }
+    .service-card p { font-size: 14px; color: #555; margin-bottom: 15px; }
+    .service-card img {
+      width: 100%; border-radius: 10px;
+      height: 180px; object-fit: cover;
+      margin-bottom: 15px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    }
+
+    /* Trending Section */
+    .trending-section {
+      padding: 60px 10%;
+      background: linear-gradient(180deg, #f9f9f9, #e8f5ff);
+    }
+    .trending-section h2 {
+      text-align: center;
+      color: #0077b6;
+      margin-bottom: 40px;
+      font-size: 30px;
+    }
+    .trending-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+    .column h3 {
+      color: #023e8a;
+      margin-bottom: 20px;
+    }
+    .listing-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+      padding: 15px;
+      margin-bottom: 15px;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .listing-card:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    .listing-card h4 { color: #03045e; margin-bottom: 5px; }
+    .listing-card p { margin: 3px 0; color: #555; }
+    .listing-link { text-decoration: none; color: inherit; display:block; }
+
+    @media (max-width: 768px) {
+      .trending-columns { grid-template-columns: 1fr; }
+      .navbar { padding: 0 20px; }
+    }
+
+    footer {
+      background: #0077b6;
+      color: white;
+      padding: 50px 60px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+    }
+    footer h3 { margin-bottom: 15px; color: #ffdd00; }
+    footer p, footer a {
+      color: #f1f1f1;
+      font-size: 14px;
+      text-decoration: none;
+    }
+    .social-icons {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .social-icons a {
+      background: white;
+      color: #0077b6;
+      width: 32px; height: 32px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+    .social-icons a:hover { transform: rotate(15deg) scale(1.1); }
+
+    /* FAQ Section */
+    .faq-section {
+      padding: 60px 10%;
+      background: linear-gradient(180deg, #e8f5ff, #ffffff);
+    }
+    .faq-section h2 {
+      text-align: center;
+      color: #0077b6;
+      margin-bottom: 30px;
+      font-size: 28px;
+    }
+    .faq-list {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .faq-item {
+      margin-bottom: 15px;
+      border-radius: 10px;
+      background: #ffffff;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+      overflow: hidden;
+    }
+    .faq-item summary {
+      padding: 14px 18px;
+      cursor: pointer;
+      list-style: none;
+      font-weight: 600;
+      color: #023e8a;
+    }
+    .faq-item summary::-webkit-details-marker {
+      display: none;
+    }
+    .faq-item summary::after {
+      content: "+";
+      float: right;
+      font-weight: bold;
+    }
+    .faq-item[open] summary::after {
+      content: "-";
+    }
+    .faq-item p {
+      padding: 0 18px 16px 18px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    /* WhatsApp Floating Button */
+    .whatsapp-float {
+      position: fixed;
+      width: 56px;
+      height: 56px;
+      bottom: 20px;
+      right: 20px;
+      background: #25D366;
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 26px;
+      text-decoration: none;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+      z-index: 3000;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .whatsapp-float:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+    }
+    .whatsapp-float span {
+      position: absolute;
+      bottom: 70px;
+      right: 0;
+      background: #ffffff;
+      color: #333;
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    }
+
+    /* =====================
+       EXTRA MOBILE LAYOUT
+       (ONLY ADDED, NOTHING ABOVE CHANGED)
+       ===================== */
+    @media (max-width: 768px) {
+
+      /* Navbar smaller & simpler */
+      .navbar {
+        padding: 0 16px;
+        height: 64px;
+      }
+
+      .logo img {
+        height: 60px;
+      }
+
+      .logo span {
+        font-size: 18px;
+      }
+
+      /* Hide big yellow buttons on mobile */
+      .nav-right .list-btn {
+        display: none;
+      }
+
+      .nav-right {
+        gap: 8px;
+      }
+
+      .profile-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+      }
+
+      /* Hero section */
+      .hero {
+        height: auto;
+        padding: 80px 16px 40px;
+      }
+
+      .hero-content h1 {
+        font-size: 28px;
+        line-height: 1.4;
+      }
+
+      .hero-content p {
+        font-size: 14px;
+        margin-bottom: 18px;
+      }
+
+      /* Search box: stack vertically */
+      .search-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        padding: 12px;
+        border-radius: 18px;
+        max-width: 100%;
+      }
+
+      .search-container input,
+      .search-container select,
+      .search-container button {
+        width: 100%;
+        border-radius: 12px;
+        font-size: 14px;
+      }
+
+      /* Services */
+      .services {
+        padding: 32px 16px;
+        gap: 18px;
+      }
+
+      .service-card {
+        padding: 20px;
+      }
+
+      /* Trending & FAQ */
+      .trending-section,
+      .faq-section {
+        padding: 32px 16px;
+      }
+
+      .trending-section h2,
+      .faq-section h2 {
+        font-size: 22px;
+      }
+
+      /* Footer */
+      footer {
+        padding: 24px 16px;
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .social-icons {
+        justify-content: center;
+      }
+    }
+
+    /* =====================
+       SOCIAL ICON LOGOS (ONLY ADDED)
+       ===================== */
+    .social-icons a {
+      position: relative;
+      overflow: hidden;
+      font-size: 0;           /* hide F/I/Y/X/L text visually */
+      text-indent: -9999px;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 60%;
+    }
+
+    .social-icons a:nth-child(1) {
+      /* Instagram */
+      background-image: linear-gradient(45deg,#f9ce34,#ee2a7b,#6228d7);
+      color: #fff;
+    }
+    .social-icons a:nth-child(2) {
+      /* Facebook */
+      background-color: #1877F2;
+      color: #fff;
+    }
+    .social-icons a:nth-child(3) {
+      /* YouTube */
+      background-color: #FF0000;
+      color: #fff;
+    }
+    .social-icons a:nth-child(4) {
+      /* X (Twitter) */
+      background-color: #000000;
+      color: #fff;
+    }
+    .social-icons a:nth-child(5) {
+      /* LinkedIn */
+      background-color: #0A66C2;
+      color: #fff;
+    }
+
+    /* =====================
+       EXTRA: Font Awesome fallback so logos always show
+       ===================== */
+    .social-icons a::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Font Awesome 6 Brands";
+      font-weight: 400;
+      font-size: 18px;
+      text-indent: 0;
+    }
+    .social-icons a:nth-child(1)::before { content: "\f16d"; } /* Instagram */
+    .social-icons a:nth-child(2)::before { content: "\f09a"; } /* Facebook */
+    .social-icons a:nth-child(3)::before { content: "\f167"; } /* YouTube  */
+    .social-icons a:nth-child(4)::before { content: "\f099"; } /* Twitter/X */
+    .social-icons a:nth-child(5)::before { content: "\f0e1"; } /* LinkedIn */
+
+    /* small gap between the two footer paragraphs */
+    footer p + p {
+      margin-top: 6px;
+    }
+
+    /* ADDED: footer logo styling */
+    .footer-logo {
+      height: 150px;
+      width: auto;
+      margin-bottom: 10px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25));
+    }
+
+    /* =====================
+       CORPORATE DETAILS SECTION (NEW)
+       ===================== */
+    .corp-details {
+      display: none;
+      background: #f4f7fb;
+      padding: 30px 60px;
+      border-top: 1px solid rgba(0,0,0,0.06);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .corp-details h2 {
+      color: #023e8a;
+      margin-bottom: 10px;
+      font-size: 22px;
+    }
+    .corp-details p {
+      font-size: 14px;
+      color: #444;
+      margin-bottom: 6px;
+    }
+    .corp-form {
+      max-width: 480px;
+      margin-top: 12px;
+    }
+    .corp-form-row {
+      margin-bottom: 10px;
+      text-align: left;
+    }
+    .corp-form-row label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #023e8a;
+    }
+    .corp-form-row input,
+    .corp-form-row textarea {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+      font-size: 14px;
+      outline: none;
+    }
+    .corp-form-row textarea {
+      resize: vertical;
+      min-height: 70px;
+    }
+    .corp-form button {
+      margin-top: 8px;
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: none;
+      background: #0077b6;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .corp-form button:hover {
+      background: #023e8a;
+    }
+    .corp-note {
+      margin-top: 10px;
+      font-size: 13px;
+    }
+    .corp-note a {
+      color: #023e8a;
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .corp-details {
+        padding: 20px 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <h2>Menu</h2>
+    <a href="index.html">🏠 Home</a>
+    <a href="jobs.html">💼 Jobs</a>
+    <a href="rentals.html">🏠 Rentals</a>
+    <a href="add-job.html">➕ Add Job</a>
+    <a href="add-rental.html">➕ Add Rental</a>
+    <a href="login.html">👤 Login</a>
+    <!-- Logout button: will be shown/hidden by JS depending on login -->
+    <button class="logout-btn" onclick="logout()">🚪 Logout</button>
+  </div>
+
+  <div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-left">
+      <div class="menu-icon" onclick="toggleMenu()">☰</div>
+      <div class="logo" onclick="window.location.href='index.html'">
+        <img src="apnabridge.png" alt="ApnaBridge Logo">
+        <span></span>
+      </div>
+    </div>
+    <div class="nav-right">
+      <button class="list-btn" onclick="window.location.href='add-job.html'">List Your Job</button>
+      <button class="list-btn" onclick="window.location.href='add-rental.html'">List Your Rental</button>
+      <div class="profile-icon" onclick="window.location.href='login.html'">👤</div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Find Jobs & Rentals Near You</h1>
+      <p>Discover the best opportunities and homes with ApnaBridge</p>
+      <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search for Jobs or Rentals...">
+        <select id="locationSelect">
+          <option value="">Select Location</option>
+          <option>Hyderabad</option>
+          <option>Bangalore</option>
+          <option>Chennai</option>
+          <option>Pune</option>
+          <option>Delhi</option>
+        </select>
+        <button onclick="performSearch()">Search</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="services">
+    <div class="service-card">
+      <img src="https://images.unsplash.com/photo-1521791055366-0d553872125f?auto=format&fit=crop&w=800&q=80" alt="Jobs">
+      <h3>Jobs</h3>
+      <p>Search and apply for jobs across multiple sectors and locations.</p>
+      <button class="list-btn" onclick="window.location.href='jobs.html'">View Jobs</button>
+    </div>
+    <div class="service-card">
+      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80" alt="Rentals">
+      <h3>Rentals</h3>
+      <p>Find apartments, houses, and rooms for rent in your city.</p>
+      <button class="list-btn" onclick="window.location.href='rentals.html'">View Rentals</button>
+    </div>
+  </section>
+
+  <!-- Trending Section -->
+  <section class="trending-section">
+    <h2>🔥 Trending Listings</h2>
+    <div class="trending-columns">
+      <div class="column" id="trendingJobs">
+        <h3>🏢 Trending Jobs</h3>
+        <div id="jobContainer" class="listing-container">
+        </div>
+      </div>
+      <div class="column" id="trendingRentals">
+        <h3>🏠 Trending Rentals</h3>
+        <div id="rentalContainer" class="listing-container">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="faq-section" id="faqs">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>What is ApnaBridge?</summary>
+        <p>ApnaBridge is a platform where you can find verified job opportunities and rental properties in different cities.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How do I list my job or rental?</summary>
+        <p>You can click on the “List Your Job” or “List Your Rental” buttons in the top navigation bar and fill out the form with your details.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Is using ApnaBridge free?</summary>
+        <p>Browsing jobs and rentals is free for users. Listing policies and charges, if any, depend on future business rules of ApnaBridge.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How do I contact the owner or recruiter?</summary>
+        <p>Open any listing and you will find the contact details or application method provided by the owner or recruiter.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can I search only in my city?</summary>
+        <p>Yes, you can select your city from the location dropdown in the search bar on the home page and then search.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div>
+      <h3>About ApnaBridge</h3>
+      <p>Your trusted platform to find verified jobs and rental listings easily.</p>
+      <p>Connect with us</p>
+      <div class="social-icons">
+        <a href="#">F</a><a href="#">I</a><a href="#">Y</a><a href="#">X</a><a href="#">L</a>
+      </div>
+    </div>
+    <div>
+      <h3>Corporate</h3>
+      <a href="#">About Us</a><br>
+      <a href="#">Contact</a><br>
+      <a href="#">Terms & Conditions</a><br>
+      <a href="#">Privacy Policy</a>
+    </div>
+    <div>
+      <h3>Quick Links</h3>
+      <a href="jobs.html">Jobs</a><br>
+      <a href="rentals.html">Rentals</a><br>
+      <a href="add-job.html">Add Job</a><br>
+      <a href="add-rental.html">Add Rental</a>
+    </div>
+  </footer>
+
+  <!-- NEW: Corporate details block that appears when clicking footer items -->
+  <section id="corporate-details" class="corp-details">
+    <h2 id="corp-details-title"></h2>
+    <div id="corp-details-body"></div>
+  </section>
+
+    <p style="text-align:center; padding:10px; background:#0077b6; color:white;">© 2025  Copyright ApnaBridge.com | All Rights Reserved.  </p>
+
+    <!-- WhatsApp Chat Button (update the phone number as needed) -->
+    <a href="https://wa.me/918885676957?text=Hi%20ApnaBridge%2C%20I%20need%20some%20help." class="whatsapp-float" target="_blank" rel="noopener">
+      💬
+      <span>Chat on WhatsApp</span>
+    </a>
+
+  <script>
+    function toggleMenu(){document.getElementById("sidebar").classList.toggle("active");document.getElementById("overlay").classList.toggle("active");}
+    function closeMenu(){document.getElementById("sidebar").classList.remove("active");document.getElementById("overlay").classList.remove("active");}
+    function performSearch(){
+      const query=document.querySelector("#searchInput").value.trim().toLowerCase();
+      const location=document.querySelector("#locationSelect").value;
+      if(!query){alert("Please enter something to search!");return;}
+      const jobKeywords=["developer","designer","manager","engineer","job","internship","teacher"];
+      const rentalKeywords=["flat","room","house","pg","apartment","rental","1bhk","2bhk","3bhk"];
+      let targetPage="jobs.html";
+      if(rentalKeywords.some(word=>query.includes(word))) targetPage="rentals.html";
+      else if(!jobKeywords.some(word=>query.includes(word))){
+        const choice=confirm("Is this related to rentals? Click OK for Rentals or Cancel for Jobs.");
+        targetPage=choice?"rentals.html":"jobs.html";
+      }
+      window.location.href=`${targetPage}?query=${encodeURIComponent(query)}&location=${encodeURIComponent(location)}`;
+    }
+
+    async function loadTrending(){
+      const jobContainer=document.getElementById("jobContainer");
+      const rentalContainer=document.getElementById("rentalContainer");
+      jobContainer.innerHTML = '<p style="padding:12px">Loading...</p>';
+      rentalContainer.innerHTML = '<p style="padding:12px">Loading...</p>';
+      try {
+        const res = await fetch("http://127.0.0.1:5000/trending");
+        if (!res.ok) throw new Error("Failed to fetch trending from backend");
+        const data = await res.json();
+        const jobs = Array.isArray(data) ? data.filter(i => i.type === "job") : [];
+        const rentals = Array.isArray(data) ? data.filter(i => i.type === "rental") : [];
+        jobContainer.innerHTML = jobs.length ? jobs.map(j => `<a class="listing-link" href="job_details.html?id=${encodeURIComponent(j.id)}"><div class="listing-card"><h4>${escapeHtml(j.title)}</h4><p>${escapeHtml(j.description?.substring(0,120) || "")}</p></div></a>`).join("") : '<p>No trending jobs yet 😕</p>';
+        rentalContainer.innerHTML = rentals.length ? rentals.map(r => `<a class="listing-link" href="rental_details.html?id=${encodeURIComponent(r.id)}"><div class="listing-card"><h4>${escapeHtml(r.title)}</h4><p>${escapeHtml(r.description?.substring(0,120) || "")}</p></div></a>`).join("") : '<p>No trending rentals yet 😕</p>';
+      } catch (err) {
+        console.error(err);
+        jobContainer.innerHTML = "<p>Error loading jobs ⚠️</p>";
+        rentalContainer.innerHTML = "<p>Error loading rentals ⚠️</p>";
+      }
+    }
+    function escapeHtml(str){return str?String(str).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;"):"";}
+
+    /* ---------------
+       LOGIN REQUIRED LOGIC
+       --------------- */
+    function isLoggedIn(){
+      return localStorage.getItem("loggedIn") === "true";
+    }
+
+    // NEW: control visibility of Logout button based on login state
+    function updateAuthUI(){
+      const logoutBtn = document.querySelector(".logout-btn");
+      if (!logoutBtn) return;
+      if (isLoggedIn()){
+        logoutBtn.style.display = "block";
+      } else {
+        logoutBtn.style.display = "none";
+      }
+    }
+
+    // Intercept clicks BEFORE inline onclick handlers
+    document.addEventListener("click", function(e){
+      const target = e.target.closest("a,button");
+      if (!target) return;
+
+      if (!shouldProtectElement(target)) return;
+      if (isLoggedIn()) return;
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      const nextPage = getTargetUrlFromElement(target);
+      window.location.href = "login.html?redirect=" + encodeURIComponent(nextPage);
+    }, true);
+
+    function shouldProtectElement(el){
+      if(!el) return false;
+      const tag = el.tagName;
+      const href = (el.getAttribute("href") || "").toLowerCase();
+
+      // Do NOT protect login page link
+      if (href.includes("login.html")) return false;
+
+      // Protect links going to jobs/rentals/add pages/details
+      if (href && (
+        href.includes("jobs.html") ||
+        href.includes("rentals.html") ||
+        href.includes("add-job.html") ||
+        href.includes("add-rental.html") ||
+        href.includes("job_details.html") ||
+        href.includes("rental_details.html")
+      )){
+        return true;
+      }
+
+      // Protect buttons like "List Your Job", "List Your Rental", "View Jobs", "View Rentals"
+      if (tag === "BUTTON" && el.classList.contains("list-btn")) {
+        return true;
+      }
+
+      // Protect trending listing links (extra safety)
+      if (el.classList.contains("listing-link")) {
+        return true;
+      }
+
+      return false;
+    }
+
+    function getTargetUrlFromElement(el){
+      let href = el.getAttribute("href") || "";
+
+      if (!href && el.tagName === "BUTTON") {
+        const onclickAttr = el.getAttribute("onclick") || "";
+        const match = onclickAttr.match(/'([^']+\.html[^']*)'/);
+        if (match && match[1]) {
+          href = match[1];
+        }
+      }
+
+      if (!href || href === "#") {
+        href = "index.html";
+      }
+      return href;
+    }
+
+    // ---- stronger logout – clears google_user so login.html doesn't auto-skip ----
+    function logout(){
+      alert("You have been logged out!");
+      // clear all login markers
+      localStorage.removeItem("loggedIn");
+      localStorage.removeItem("apnabridge_isLoggedIn");
+      try {
+        sessionStorage.removeItem("google_user");
+      } catch (e) {}
+      updateAuthUI();
+      // back to home page
+      window.location.href = "index.html";
+    }
+
+    // Combined initialiser: load trending + update auth UI
+    document.addEventListener("DOMContentLoaded", function () {
+      loadTrending();
+      updateAuthUI();
+    });
+
+    // ADDED: make social icons open real pages in new tab
+    document.addEventListener("DOMContentLoaded", function () {
+      const socials = document.querySelectorAll(".social-icons a");
+      if (!socials.length) return;
+
+      // change these URLs to your real profiles
+      const urls = [
+        "https://www.instagram.com/ntqs_digital/",   // Instagram
+        "https://www.facebook.com/ntqsdigital",    // Facebook
+        "https://www.youtube.com/@ntqs_digital/",     // YouTube
+        "https://twitter.com/",         // X / Twitter
+        "https://www.linkedin.com/company/ntqs-digital/"     // LinkedIn
+      ];
+
+      socials.forEach((link, idx) => {
+        if (urls[idx]) {
+          link.href = urls[idx];
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+        }
+      });
+    });
+
+    // ADDED: Corporate links show details section (About Us, Contact, etc.)
+    document.addEventListener("DOMContentLoaded", function () {
+      const corpSection = document.getElementById("corporate-details");
+      const titleEl = document.getElementById("corp-details-title");
+      const bodyEl = document.getElementById("corp-details-body");
+      if (!corpSection || !titleEl || !bodyEl) return;
+
+      // second column of footer (Corporate)
+      const corporateColumn = document.querySelector("footer > div:nth-child(2)");
+      if (!corporateColumn) return;
+
+      const links = corporateColumn.querySelectorAll("a");
+      if (!links.length) return;
+
+      const contentMap = {
+        "About Us": {
+          title: "About ApnaBridge",
+          body: `<p>ApnaBridge is a local-first platform that connects job seekers, recruiters, tenants and property owners in one simple place.</p>
+                 <p>Our goal is to make it easy for people to discover verified jobs and affordable rental options in their own city.</p>`
+        },
+        "Contact": {
+          title: "Contact ApnaBridge",
+          body: `<p>Have a question or want to work with us? Share your details below and our team will get back to you.</p>
+                 <form class="corp-form" onsubmit="event.preventDefault(); alert('Thank you! We will contact you soon.');">
+                   <div class="corp-form-row">
+                     <label for="corpName">Full Name</label>
+                     <input id="corpName" type="text" placeholder="Your name" required>
+                   </div>
+                   <div class="corp-form-row">
+                     <label for="corpEmail">Email</label>
+                     <input id="corpEmail" type="email" placeholder="you@example.com" required>
+                   </div>
+                   <div class="corp-form-row">
+                     <label for="corpPhone">Phone Number</label>
+                     <input id="corpPhone" type="tel" placeholder="+91-XXXXXXXXXX">
+                   </div>
+                   <div class="corp-form-row">
+                     <label for="corpMsg">Message</label>
+                     <textarea id="corpMsg" placeholder="Tell us how we can help"></textarea>
+                   </div>
+                   <button type="submit">Submit</button>
+                 </form>
+                 <p class="corp-note">You can also reach us at
+                   <a href="mailto:support@apnabridge.com">info@nuevostech.com</a>
+                   or call <strong>+91-8885676957</strong>.
+                 </p>`
+        },
+        "Terms & Conditions": {
+          title: "Terms & Conditions",
+          body: `<p>ApnaBridge provides a listing platform for jobs and rentals. We do not guarantee hiring decisions, property availability or agreements between users.</p>
+                 <p>Users are responsible for verifying listings, documents and payments before entering into any agreement.</p>`
+        },
+        "Privacy Policy": {
+          title: "Privacy Policy",
+          body: `<p>We respect your privacy and only collect basic information needed to run the platform and improve your experience.</p>
+                 <p>Your data is never sold to third parties. For any privacy-related queries, write to
+                    <a href="mailto:privacy@apnabridge.com">privacy@apnabridge.com</a>.
+                 </p>`
+        }
+      };
+
+      links.forEach(link => {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          const key = this.textContent.trim();
+          const cfg = contentMap[key];
+          if (!cfg) return;
+          titleEl.textContent = cfg.title;
+          bodyEl.innerHTML = cfg.body;
+          corpSection.style.display = "block";
+          corpSection.scrollIntoView({ behavior: "smooth" });
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
